@@ -6,25 +6,36 @@ import Preview from "./Preview";
 import axios from "axios";
 import { fetchFilesandFolders } from "../../lib/fetchFilesAndFolders";
 const DisplayFiles = ({ heading, files }) => {
-  const { directory, setDirectory, setPath, path ,profile,setFiles,setFolders} = getProfile();
+  const {
+    directory,
+    setDirectory,
+    setPath,
+    path,
+    profile,
+    setFiles,
+    setFolders,
+  } = getProfile();
   const [openPreview, setOpenPreview] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const open = (file) => {
     setDirectory(file._id);
     setPath(file.path);
     console.log(path, directory);
   };
-  const deleteFolder=async()=>{
+  const deleteFolder = async () => {
     try {
-      const res=await axios.post("http://localhost:3000/api/delete-folder",{id:directory})
-     
-      fetchFilesandFolders(profile,setFiles,setFolders)
-      window.location.href="/dashboard"
+      const res = await axios.post(
+        "file-manager-backend-vert.vercel.appapi/delete-folder",
+        { id: directory }
+      );
+
+      fetchFilesandFolders(profile, setFiles, setFolders);
+      window.location.href = "/dashboard";
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -36,11 +47,15 @@ const DisplayFiles = ({ heading, files }) => {
       <div className={styles.file}>
         <h4 className="border-bottom text-center">{heading}</h4>
         <div className={styles.container}>
-        {heading=="Folders" && directory?
-          <button className="btn btn-outline-danger" onClick={deleteFolder} style={{alignSelf:"flex-end"}}>
-          Delete
-        </button>
-          :null}
+          {heading == "Folders" && directory ? (
+            <button
+              className="btn btn-outline-danger"
+              onClick={deleteFolder}
+              style={{ alignSelf: "flex-end" }}
+            >
+              Delete
+            </button>
+          ) : null}
           {!files?.length ? (
             <div>Nothing to see Here</div>
           ) : (

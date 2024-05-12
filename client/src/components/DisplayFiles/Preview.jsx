@@ -4,10 +4,10 @@ import styles from "./DisplayFiles.module.css";
 import axios from "axios";
 import { fetchFilesandFolders } from "../../lib/fetchFilesAndFolders";
 import { getProfile } from "../Context/Context";
-const Preview = ({ openPreview, setOpenPreview, selectedFile ,directory}) => {
-  const { setFiles, setFolders, profile, files ,folders} = getProfile();
+const Preview = ({ openPreview, setOpenPreview, selectedFile, directory }) => {
+  const { setFiles, setFolders, profile, files, folders } = getProfile();
   const [newName, setNewName] = useState(selectedFile?.fileName);
-  const [moveTo,setMoveTo]=useState(null)
+  const [moveTo, setMoveTo] = useState(null);
   const [isRenaming, setIsRenaming] = useState(false);
   const handleRename = async () => {
     if (
@@ -25,7 +25,7 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile ,directory}) => {
 
       const payload = { id: selectedFile._id, name: newName, type: 0 };
       const response = await axios.put(
-        "http://localhost:3000/api/rename",
+        "file-manager-backend-vert.vercel.appapi/rename",
         payload
       );
       console.log("Item renamed");
@@ -36,20 +36,23 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile ,directory}) => {
       setIsRenaming(false);
     }
   };
-  const moveFile=async()=>{
-    console.log(moveTo)
+  const moveFile = async () => {
+    console.log(moveTo);
     try {
-      if(moveTo!=null){
-        console.log(moveTo)
-        const res=await axios.post(`http://localhost:3000/api/move`,{currId:selectedFile._id,target:moveTo})
-        setOpenPreview(false)
-        window.location.href=`/dashboard`
-        console.log(res)
+      if (moveTo != null) {
+        console.log(moveTo);
+        const res = await axios.post(
+          `file-manager-backend-vert.vercel.appapi/move`,
+          { currId: selectedFile._id, target: moveTo }
+        );
+        setOpenPreview(false);
+        window.location.href = `/dashboard`;
+        console.log(res);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   const deleteFile = async () => {
     try {
       const payload = {
@@ -57,7 +60,7 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile ,directory}) => {
         filename: selectedFile.storedName,
       };
       const res = await axios.post(
-        "http://localhost:3000/api/delete-file",
+        "file-manager-backend-vert.vercel.appapi/delete-file",
         payload
       );
       setOpenPreview(false);
@@ -75,7 +78,7 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile ,directory}) => {
       case "image/jpeg":
         return (
           <img
-            src={`http://localhost:3000/${selectedFile?.storedName}`}
+            src={`file-manager-backend-vert.vercel.app${selectedFile?.storedName}`}
             alt={selectedFile?.storedName}
             width="100%"
             height="100%"
@@ -84,7 +87,7 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile ,directory}) => {
       case "application/pdf":
         return (
           <embed
-            src={`http://localhost:3000/${selectedFile?.storedName}`}
+            src={`file-manager-backend-vert.vercel.app${selectedFile?.storedName}`}
             type="application/pdf"
             width="100%"
             height="100%"
@@ -127,14 +130,15 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile ,directory}) => {
               value={newName}
               onChange={(e) => setMoveTo(e.target.value)}
             >
-              <option disabled value="" selected>Select an option</option>
+              <option disabled value="" selected>
+                Select an option
+              </option>
               <option value="root">root</option>
-             {folders?.map((folder, index) => (
+              {folders?.map((folder, index) => (
                 <option key={index} value={folder._id}>
                   {folder.folderName}
                 </option>
-              ))
-              }
+              ))}
             </Form.Control>
             <button className="btn btn-outline-info" onClick={moveFile}>
               Move

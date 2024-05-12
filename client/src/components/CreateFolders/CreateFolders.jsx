@@ -4,7 +4,7 @@ import { getProfile } from "../Context/Context";
 import axios from "axios";
 import { fetchFilesandFolders } from "../../lib/fetchFilesAndFolders";
 const CreateFolders = ({ isModalOpen, setIsModalOpen }) => {
-  const { folders, setFolders, directory, profile, setFiles} = getProfile();
+  const { folders, setFolders, directory, profile, setFiles } = getProfile();
   const [newFolder, setNewFolder] = useState({
     folderName: "",
     createdAt: new Date(),
@@ -14,9 +14,15 @@ const CreateFolders = ({ isModalOpen, setIsModalOpen }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const handleFolderSubmit = async (e) => {
     e.preventDefault();
-    if(folders.find(folder=>(folder.parentFolderId===directory && folder.folderName===newFolder.folderName))){
-      alert("Please Enter a unique name")
-      return
+    if (
+      folders.find(
+        (folder) =>
+          folder.parentFolderId === directory &&
+          folder.folderName === newFolder.folderName
+      )
+    ) {
+      alert("Please Enter a unique name");
+      return;
     }
     setTimeout(() => {}, 3000);
     if (!newFolder.folderName) {
@@ -24,26 +30,29 @@ const CreateFolders = ({ isModalOpen, setIsModalOpen }) => {
       return;
     }
     console.log("Value of directory:", directory); // Add this line
-  
+
     setNewFolder({
       ...newFolder,
       createdAt: new Date(),
       userId: user._id,
       parentFolderId: directory ? directory : null,
     });
-  
+
     console.log("Value of newFolder after setNewFolder:", newFolder); // Add this line
-  
+
     try {
       if (newFolder.userId) {
-         axios.post(
-          "http://localhost:3000/api/create-folder",
-          newFolder
-        ).then(()=>{
-          alert("Folder Created")
-          fetchFilesandFolders(profile, setFolders, setFiles)
-          setIsModalOpen(false)}
-        ).catch(console.log("Error Creating Folder"))
+        axios
+          .post(
+            "file-manager-backend-vert.vercel.appapi/create-folder",
+            newFolder
+          )
+          .then(() => {
+            alert("Folder Created");
+            fetchFilesandFolders(profile, setFolders, setFiles);
+            setIsModalOpen(false);
+          })
+          .catch(console.log("Error Creating Folder"));
         // if (res.status == "200") {
         //   alert("Folder Created");
         //   fetchFilesandFolders(profile, setFolders, setFiles);
@@ -56,7 +65,7 @@ const CreateFolders = ({ isModalOpen, setIsModalOpen }) => {
       console.log("Error Creating Folder", error);
     }
   };
-  
+
   return (
     <>
       <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>

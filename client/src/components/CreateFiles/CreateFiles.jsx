@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { fetchFilesandFolders } from "../../lib/fetchFilesAndFolders";
- import { getProfile } from "../Context/Context";
+import { getProfile } from "../Context/Context";
 const CreateFiles = () => {
   const [file, setFile] = useState(null);
-  const [temp,setTemp]=useState(null)
-   const { profile,directory ,setFiles,setFolders} = getProfile();
+  const [temp, setTemp] = useState(null);
+  const { profile, directory, setFiles, setFolders } = getProfile();
   const handleFileChange = async (e) => {
-
     const selectedFile = e.target.files[0];
     if (selectedFile && profile._id) {
       const form = new FormData();
       form.append("userId", profile._id);
       form.append("folderId", directory);
-      form.append("file",selectedFile)
+      form.append("file", selectedFile);
       try {
         const res = await axios.post(
-          "http://localhost:3000/api/create-file",form
+          "file-manager-backend-vert.vercel.appapi/create-file",
+          form
         );
         if (res.status == "201") {
-          console.log("File created",res.data)
+          console.log("File created", res.data);
         }
         fetchFilesandFolders(profile, setFolders, setFiles);
       } catch (error) {
