@@ -1,0 +1,50 @@
+.illustration {
+  max-height: 500px;
+  width: auto;
+}
+.signin {
+  width:30%;
+  margin:auto;
+  align-items: center;
+}
+button:hover {
+  filter: brightness(95%);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.form label {
+  display: block;
+  margin: 1.25rem 0 1rem 0;
+}
+
+.form input {
+  height: 40px;
+  width: 100%;
+  padding: 15px;
+  background-color: #f1f9ff;
+  border: 2px solid #bce0fd;
+  border-radius: 8px;
+}
+
+.form button {
+  height: 40px;
+  width: 100%;
+  background-color: #258de6;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  display: block;
+  margin: 0 auto;
+  font-weight: bold;
+  margin-top: 1.5rem;
+  border-radius: 8px;
+}
+.form .heading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
