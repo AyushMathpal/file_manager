@@ -26,7 +26,7 @@ const DisplayFiles = ({ heading, files }) => {
   const deleteFolder = async () => {
     try {
       const res = await axios.post(
-        "/api/delete-folder",
+        "https://file-manager-backend-vert.vercel.app/api/delete-folder",
         { id: directory }
       );
 
