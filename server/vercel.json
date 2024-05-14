@@ -1,21 +1,10 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "*.js",
-      "use": "@vercel/node"
-    }
-  ],
+  "builds": [{ "src": "*.js", "use": "@vercel/node" }],
   "routes": [
     {
       "src": "/(.*)",
       "dest": "/"
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/:match*",
-      "destination": "https://file-manager-backend-vert.vercel.app/:match*"
     }
   ]
 }
