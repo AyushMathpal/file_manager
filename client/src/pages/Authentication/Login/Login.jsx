@@ -19,7 +19,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const result = await axios.post(
-        "/api/login",
+        "https://file-manager-backend-vert.vercel.app/api/login",
         credentials
       );
       if (result.status == "200") {
