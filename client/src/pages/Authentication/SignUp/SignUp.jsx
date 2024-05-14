@@ -28,7 +28,7 @@ export default function Signup() {
     console.log(credentials);
     try {
       const result = await axios.post(
-        "file-manager-backend-vert.vercel.appapi/signup",
+        "/api/signup",
         credentials
       );
       if (result.status == "200") {

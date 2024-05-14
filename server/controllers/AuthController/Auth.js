@@ -29,7 +29,9 @@ export const signup = async (req, res) => {
     console.log("Error during signup:", error);
   }
 };
-
+// The routes are not being protected for now.I am storing the cookies as http cookies
+// but for simplicity purposes accessing them in local storage. Ideally
+// they should be fetched and authenticated from http cookies.
 export const login = async (req, res) => {
   const { email, password } = req.body;
   try {

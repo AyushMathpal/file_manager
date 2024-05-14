@@ -26,7 +26,7 @@ const DisplayFiles = ({ heading, files }) => {
   const deleteFolder = async () => {
     try {
       const res = await axios.post(
-        "file-manager-backend-vert.vercel.appapi/delete-folder",
+        "/api/delete-folder",
         { id: directory }
       );
 
@@ -44,7 +44,7 @@ const DisplayFiles = ({ heading, files }) => {
         setOpenPreview={setOpenPreview}
         selectedFile={selectedFile}
       />
-      <div className={styles.file}>
+      <div className={styles.displayitems}>
         <h4 className="border-bottom text-center">{heading}</h4>
         <div className={styles.container}>
           {heading == "Folders" && directory ? (

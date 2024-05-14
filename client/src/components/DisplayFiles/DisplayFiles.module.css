@@ -1,29 +1,32 @@
-.file{
-    margin-top: 5rem;
+.displayitems {
+  overflow: hidden;
+  margin-top: 5rem;
 }
-.container{
-    padding: 2rem;
- display: flex;
+.container {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(7,auto);
  gap: 2rem;
 }
-.single_file{
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    border:0.1px solid lightgray;
-    text-align: center;
-    min-width: 3rem;
-    min-height: 3rem;
-    cursor: pointer;
+.single_file {
+    width: fit-content;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 0.1px solid lightgray;
+  text-align: center;
+  min-width: 3rem;
+  min-height: 3rem;
+  cursor: pointer;
 }
-.folders{
-    text-decoration: none;
-    color: black;
+.folders {
+  text-decoration: none;
+  color: black;
 }
-.files{
-    width: auto;
-    height: 100px;
+.files {
+  width: auto;
+  height: 100px;
 }
-.modal{
-    min-height: 100vh;
+.modal {
+  min-height: 100vh;
 }

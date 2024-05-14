@@ -44,7 +44,7 @@ const CreateFolders = ({ isModalOpen, setIsModalOpen }) => {
       if (newFolder.userId) {
         axios
           .post(
-            "file-manager-backend-vert.vercel.appapi/create-folder",
+            "/api/create-folder",
             newFolder
           )
           .then(() => {

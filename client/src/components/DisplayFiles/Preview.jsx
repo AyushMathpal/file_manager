@@ -24,10 +24,7 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile, directory }) => {
       setIsRenaming(true);
 
       const payload = { id: selectedFile._id, name: newName, type: 0 };
-      const response = await axios.put(
-        "file-manager-backend-vert.vercel.appapi/rename",
-        payload
-      );
+      const response = await axios.put("/api/rename", payload);
       console.log("Item renamed");
       setIsRenaming(false);
       fetchFilesandFolders(profile, setFolders, setFiles);
@@ -41,10 +38,10 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile, directory }) => {
     try {
       if (moveTo != null) {
         console.log(moveTo);
-        const res = await axios.post(
-          `file-manager-backend-vert.vercel.appapi/move`,
-          { currId: selectedFile._id, target: moveTo }
-        );
+        const res = await axios.post(`/api/move`, {
+          currId: selectedFile._id,
+          target: moveTo,
+        });
         setOpenPreview(false);
         window.location.href = `/dashboard`;
         console.log(res);
@@ -59,10 +56,7 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile, directory }) => {
         id: selectedFile._id,
         filename: selectedFile.storedName,
       };
-      const res = await axios.post(
-        "file-manager-backend-vert.vercel.appapi/delete-file",
-        payload
-      );
+      const res = await axios.post("/api/delete-file", payload);
       setOpenPreview(false);
       if (res.data.success) {
         fetchFilesandFolders(profile, setFolders, setFiles);
@@ -74,28 +68,40 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile, directory }) => {
   };
   const renderPreview = () => {
     if (!selectedFile) return null;
+    console.log(selectedFile.storedName);
     switch (selectedFile.fileType) {
       case "image/jpeg":
         return (
           <img
-            src={`file-manager-backend-vert.vercel.app${selectedFile?.storedName}`}
-            alt={selectedFile?.storedName}
+            src={selectedFile.storedName}
+            alt={selectedFile?.fileName}
             width="100%"
             height="100%"
           />
         );
       case "application/pdf":
         return (
-          <embed
-            src={`file-manager-backend-vert.vercel.app${selectedFile?.storedName}`}
+          <iframe
+            src={selectedFile?.storedName}
             type="application/pdf"
             width="100%"
             height="100%"
           />
         );
       // Add cases for other file types as needed
+      case "video/mp4":
+        return <iframe
+        src={selectedFile?.storedName}
+        type="video/mp4"
+        width="100%"
+        height="100%"
+      />
       default:
-        return <p>Preview not available for this file type</p>;
+        return <iframe
+        src={selectedFile?.storedName}
+        width="100%"
+        height="100%"
+      />
     }
   };
   return (

@@ -1,5 +1,6 @@
 import File from "../../models/File.js";
 import Folder from "../../models/Folder.js";
+import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 
 
 export const createFolder=async (req, res) => {
@@ -25,15 +26,17 @@ export const createFolder=async (req, res) => {
   }
 
 export const createFile=async(req, res) => {
+  const file = req.file;
+  const path=file?.path
     try {
       const { userId,folderId } = req.body;
-      
-      const file = req.file;
-      console.log(userId,folderId,file)
+      const upload=await uploadOnCloudinary(path)
+      const publicId=upload.public_id
       let item;
-      if(folderId.length<8){
+      if(folderId==null || folderId.length<8){
         item =await File.create({
-          storedName: file.filename,
+          storedName: upload.url,
+          publicId:publicId,
           fileName: file.originalname,
           fileSize: file.size,
           fileType: file.mimetype,
@@ -42,8 +45,9 @@ export const createFile=async(req, res) => {
         });
       }
       else{
-        item= await File.create({
+        item=await File.create({
           storedName: file.filename,
+          publicId:publicId,
           fileName: file.originalname,
           fileSize: file.size,
           fileType: file.mimetype,
@@ -53,8 +57,9 @@ export const createFile=async(req, res) => {
         });
       }
       console.log(item)
-      return res.status(201).json({ message: "File Uploaded Successfully"});
+      return res.status(201).json({item,message: "File Uploaded Successfully"});
     } catch (error) {
+      console.log(error)
       return res.status(400).json({ error, message: "File Upload failed" });
     }
   }

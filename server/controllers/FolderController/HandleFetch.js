@@ -3,7 +3,6 @@ import Folder from "../../models/Folder.js";
 
 export const fetchFiles=async (req, res) => {
     const profileId = req.params.profileId;
-    console.log(profileId)
     try {
       const files = await File.find({userId:profileId});
       const folders = await Folder.find({userId:profileId});

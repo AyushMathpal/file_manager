@@ -5,7 +5,7 @@ export const fetchFilesandFolders = async (profile, setFolders, setFiles) => {
     if (user._id) {
       console.log(user._id);
       const res = await axios.get(
-        `file-manager-backend-vert.vercel.appapi/fetch-files/${user._id}`
+        `/api/fetch-files/${user._id}`
       );
       if (res.status == "200") {
         setFolders(res.data.folders);
