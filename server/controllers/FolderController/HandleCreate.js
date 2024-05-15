@@ -55,7 +55,7 @@ export const createFile = async (req, res) => {
       });
     } else {
       item = await File.create({
-        storedName: file.filename,
+        storedName: upload.url,
         publicId: publicId,
         fileName: file.originalname,
         fileSize: file.size,
