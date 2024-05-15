@@ -3,7 +3,8 @@ import { getProfile } from '../../../components/Context/Context'
 import Subnav from '../../../components/SubNav/Subnav'
 import DisplayFiles from '../../../components/DisplayFiles/DisplayFiles'
 import { fetchFilesandFolders } from '../../../lib/fetchFilesAndFolders'
-import LinearLoader from 'react-linear-loader'
+import LinearLoader from '../../../components/Loader/Loader.jsx'
+
 
 
 const Dashboard = () => {

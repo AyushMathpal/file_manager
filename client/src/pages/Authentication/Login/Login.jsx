@@ -4,7 +4,8 @@ import styles from "./Login.module.css";
 import axios from "axios";
 
 import { getProfile } from "../../../components/Context/Context";
-import LinearLoader from "react-linear-loader";
+import LinearLoader from "../../../components/Loader/Loader.jsx";
+
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const { profile, setProfile,loading,setLoading } = getProfile();
