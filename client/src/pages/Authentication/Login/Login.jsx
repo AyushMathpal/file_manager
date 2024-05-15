@@ -15,7 +15,7 @@ const Login = () => {
     if (!token) {
       return;
     } else {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [navigate]);
   const handleSubmit = async (e) => {
@@ -31,7 +31,7 @@ const Login = () => {
         console.log(result.data.user);
         setProfile(result.data.user);
         localStorage.setItem("profile", JSON.stringify(result.data.user));
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (error) {
       setLoading(false)

@@ -32,7 +32,7 @@ const DisplayFiles = ({ heading, files }) => {
       );
 
       fetchFilesandFolders(profile, setFiles, setFolders);
-      window.location.href = "/dashboard";
+      window.location.href = "/";
     } catch (error) {
       console.log(error);
     }

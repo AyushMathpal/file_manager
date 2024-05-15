@@ -16,7 +16,7 @@ const Subnav = ({ isModalOpen, setIsModalOpen, profile }) => {
         <Breadcrumb>
         {path.map((loc,index)=>{
           
-          return <Breadcrumb.Item key={index} href={loc==='/'?'/dashboard':`/${loc}`} active={loc===directory}>{loc=="/"?"root":folders.find(folder=>folder._id==loc).folderName}</Breadcrumb.Item>
+          return <Breadcrumb.Item key={index} href={loc==='/'?'/':`/${loc}`} active={loc===directory}>{loc=="/"?"root":folders.find(folder=>folder._id==loc).folderName}</Breadcrumb.Item>
         })}
     </Breadcrumb>
         </div>
