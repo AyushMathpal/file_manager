@@ -31,7 +31,7 @@ const Login = () => {
         console.log(result.data.user);
         setProfile(result.data.user);
         localStorage.setItem("profile", JSON.stringify(result.data.user));
-        navigate("/");
+        navigate("/dashboard");
       }
     } catch (error) {
       setLoading(false)

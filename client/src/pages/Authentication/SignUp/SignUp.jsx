@@ -33,7 +33,7 @@ export default function Signup() {
       );
       if (result.status == "200") {
         setProfile(result.data.userData);
-        navigate("/");
+        navigate("/dashboard");
         localStorage.setItem("profile", JSON.stringify(result.data.userData));
       }
     } catch (error) {

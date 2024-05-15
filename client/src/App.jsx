@@ -16,6 +16,7 @@ function App() {
           <Route path="/" element={<ProtectedRoute Children={Login} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard/:id?" element={<ProtectedRoute Children={Dashboard} />} />
+          <Route path="*" element={<ProtectedRoute Children={Login} />} />
         </Routes>
       </div>
     </BrowserRouter>
