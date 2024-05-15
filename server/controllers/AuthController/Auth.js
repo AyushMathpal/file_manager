@@ -33,6 +33,7 @@ export const signup = async (req, res) => {
 // but for simplicity purposes accessing them in local storage. Ideally
 // they should be fetched and authenticated from http cookies.
 export const login = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://file-manager-frontend-one.vercel.app');
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
