@@ -24,7 +24,7 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile, directory }) => {
       setIsRenaming(true);
 
       const payload = { id: selectedFile._id, name: newName, type: 0 };
-      const response = await axios.put("https://file-manager-backend-vert.vercel.app/api/rename", payload);
+      const response = await axios.put("https://file-manager-backend-b1yk.onrender.com/api/rename", payload);
       console.log("Item renamed");
       setIsRenaming(false);
       fetchFilesandFolders(profile, setFolders, setFiles);
@@ -38,7 +38,7 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile, directory }) => {
     try {
       if (moveTo != null) {
         console.log(moveTo);
-        const res = await axios.post(`https://file-manager-backend-vert.vercel.app/api/move`, {
+        const res = await axios.post(`https://file-manager-backend-b1yk.onrender.com/api/move`, {
           currId: selectedFile._id,
           target: moveTo,
         });
@@ -56,7 +56,7 @@ const Preview = ({ openPreview, setOpenPreview, selectedFile, directory }) => {
         id: selectedFile._id,
         filename: selectedFile.storedName,
       };
-      const res = await axios.post("https://file-manager-backend-vert.vercel.app/api/delete-file", payload);
+      const res = await axios.post("https://file-manager-backend-b1yk.onrender.com/api/delete-file", payload);
       setOpenPreview(false);
       if (res.data.success) {
         fetchFilesandFolders(profile, setFolders, setFiles);

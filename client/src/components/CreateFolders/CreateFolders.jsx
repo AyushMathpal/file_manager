@@ -44,7 +44,7 @@ const CreateFolders = ({ isModalOpen, setIsModalOpen }) => {
         setLoading(true)
         axios
           .post(
-            "https://file-manager-backend-vert.vercel.app/api/create-folder",
+            "https://file-manager-backend-b1yk.onrender.com/api/create-folder",
             newFolder
           )
           .then(() => {

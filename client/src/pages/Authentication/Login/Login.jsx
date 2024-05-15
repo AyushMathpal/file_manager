@@ -23,7 +23,7 @@ const Login = () => {
     try {
       setLoading(true)
       const result = await axios.post(
-        "https://file-manager-backend-vert.vercel.app/api/login",
+        "https://file-manager-backend-b1yk.onrender.com/api/login",
         credentials
       );
       setLoading(false)

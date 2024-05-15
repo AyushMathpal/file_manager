@@ -14,7 +14,7 @@ const CreateFiles = () => {
       try {
         setLoading(true)
         const res = await axios.post(
-          "https://file-manager-backend-vert.vercel.app/api/create-file",
+          "https://file-manager-backend-b1yk.onrender.com/api/create-file",
           form
         );
         if (res.status == "201") {
