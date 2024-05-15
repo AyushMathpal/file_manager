@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import axios from "axios";
+
 import { getProfile } from "../../../components/Context/Context";
+import LinearLoader from "react-linear-loader";
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const { profile, setProfile } = getProfile();
+  const { profile, setProfile,loading,setLoading } = getProfile();
   const navigate = useNavigate();
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("profile"));
@@ -18,10 +20,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const result = await axios.post(
         "https://file-manager-backend-vert.vercel.app/api/login",
         credentials
       );
+      setLoading(false)
       if (result.status == "200") {
         console.log(result.data.user);
         setProfile(result.data.user);
@@ -29,12 +33,15 @@ const Login = () => {
         navigate("/dashboard");
       }
     } catch (error) {
+      setLoading(false)
       alert("Login Failed");
       console.log("Login Failed", error);
     }
   };
   return (
+    
     <div className={styles.signin}>
+      {loading?<LinearLoader/>:null}
       <div className={styles.form}>
         <div className={styles.heading}>LOGIN</div>
         <form onSubmit={handleSubmit}>

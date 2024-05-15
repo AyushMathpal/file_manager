@@ -4,24 +4,27 @@ import { getURI } from "../../utils/bufferParser.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 
 export const createFolder = async (req, res) => {
-  const { folderName, userId, createdAt, parentFolderId } = req.body;
+  const { folderName, userId, parentFolderId } = req.body;
   try {
-    const parent = parentFolderId
-      ? await Folder.findOne({ _id: parentFolderId }, { path: 1, _id: 0 })
-      : null;
-    console.log(folderName, userId, parentFolderId);
-    console.log(parent);
+    let parent = "";
+    if (parentFolderId != "") {
+      parent = await Folder.findOne(
+        { _id: parentFolderId },
+        { path: 1, _id: 0 }
+      );
+    }
     const newFolder = await Folder.create({
       folderName: folderName,
       userId: userId,
       parentFolderId: parentFolderId || null,
-      path: parent ? [...parent.path] : ["/"],
+      path: parent!="" ?[...parent.path] : ["/"],
     });
     newFolder.path.push(newFolder._id);
     await newFolder.save();
     return res.status(200).json({ message: "Folder Successfully Created" });
   } catch (error) {
     console.log(error);
+    console.log(error)
     return res.status(404).json({ error });
   }
 };

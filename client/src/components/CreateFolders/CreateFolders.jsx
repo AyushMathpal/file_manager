@@ -3,12 +3,14 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { getProfile } from "../Context/Context";
 import axios from "axios";
 import { fetchFilesandFolders } from "../../lib/fetchFilesAndFolders";
+import { useParams } from "react-router-dom";
 const CreateFolders = ({ isModalOpen, setIsModalOpen }) => {
-  const { folders, setFolders, directory, profile, setFiles } = getProfile();
+  const { folders, setFolders, directory, profile, setFiles,setLoading } = getProfile();
+  const { id } = useParams();
   const [newFolder, setNewFolder] = useState({
     folderName: "",
     createdAt: new Date(),
-    parentFolderId: directory,
+    parentFolderId: id == undefined ? "" : id,
     userId: "",
   });
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -24,25 +26,24 @@ const CreateFolders = ({ isModalOpen, setIsModalOpen }) => {
       alert("Please Enter a unique name");
       return;
     }
-    setTimeout(() => {}, 3000);
+    setTimeout(() => {}, 1000);
     if (!newFolder.folderName) {
       alert("Please Enter Folder's Name");
       return;
     }
-    console.log("Value of directory:", directory); // Add this line
 
     setNewFolder({
       ...newFolder,
       createdAt: new Date(),
       userId: user._id,
-      parentFolderId: directory ? directory : null,
+      parentFolderId: id == undefined ? "" : id,
     });
-
-    console.log("Value of newFolder after setNewFolder:", newFolder); // Add this line
 
     try {
       if (newFolder.userId) {
-        axios.post(
+        setLoading(true)
+        axios
+          .post(
             "https://file-manager-backend-vert.vercel.app/api/create-folder",
             newFolder
           )
@@ -57,8 +58,10 @@ const CreateFolders = ({ isModalOpen, setIsModalOpen }) => {
         //   fetchFilesandFolders(profile, setFolders, setFiles);
         //   setIsModalOpen(false);
         // }
+        setLoading(false)
       }
     } catch (error) {
+      setLoading(false)
       setIsModalOpen(false);
       alert("Error Creating Folder. Please Try Again");
       console.log("Error Creating Folder", error);

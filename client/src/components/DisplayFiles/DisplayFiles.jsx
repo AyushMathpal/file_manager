@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./DisplayFiles.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProfile } from "../Context/Context";
 import Preview from "./Preview";
 import axios from "axios";
@@ -18,9 +18,10 @@ const DisplayFiles = ({ heading, files }) => {
   const [openPreview, setOpenPreview] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
+  const {id}=useParams()
   const open = (file) => {
-    setDirectory(file._id);
-    setPath(file.path);
+    setDirectory(file?._id);
+    setPath(file?.path);
     console.log(path, directory);
   };
   const deleteFolder = async () => {
@@ -36,7 +37,6 @@ const DisplayFiles = ({ heading, files }) => {
       console.log(error);
     }
   };
-
   return (
     <>
       <Preview
@@ -45,25 +45,27 @@ const DisplayFiles = ({ heading, files }) => {
         selectedFile={selectedFile}
       />
       <div className={styles.displayitems}>
-        <h4 className="border-bottom text-center">{heading}</h4>
-        <div className={styles.container}>
-          {heading == "Folders" && directory ? (
+      {heading == "Folders" && directory ? (
             <button
               className="btn btn-outline-danger"
               onClick={deleteFolder}
-              style={{ alignSelf: "flex-end" }}
+              style={{ alignSelf: "flex-end",marginRight:"2rem" }}
             >
               Delete
             </button>
           ) : null}
+        <h4 className="border-bottom text-center">{heading}</h4>
+        
+        <div className={styles.container}>
+          
           {!files?.length ? (
             <div>Nothing to see Here</div>
           ) : (
             files
               .filter((file) =>
                 heading === "Files"
-                  ? file.folderId === directory
-                  : file.parentFolderId === directory
+                  ? file.folderId == (id==undefined?null:id)
+                  : file.parentFolderId ==(id==undefined?null:id)
               )
               .map((file, index) => {
                 return (

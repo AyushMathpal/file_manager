@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 const Drive = createContext();
 const Context = ({ children }) => {
+  const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState(null);
   const [folders, setFolders] = useState(null);
   const [files, setFiles] = useState(null);
@@ -20,6 +21,8 @@ const Context = ({ children }) => {
         setDirectory,
         path,
         setPath,
+        loading,
+        setLoading,
       }}
     >
       {children}

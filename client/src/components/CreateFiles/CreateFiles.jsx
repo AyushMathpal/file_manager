@@ -3,9 +3,7 @@ import axios from "axios";
 import { fetchFilesandFolders } from "../../lib/fetchFilesAndFolders";
 import { getProfile } from "../Context/Context";
 const CreateFiles = () => {
-  const [file, setFile] = useState(null);
-  const [temp, setTemp] = useState(null);
-  const { profile, directory, setFiles, setFolders } = getProfile();
+  const { profile, directory, setFiles, setFolders ,setLoading} = getProfile();
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile && profile._id) {
@@ -14,6 +12,7 @@ const CreateFiles = () => {
       form.append("folderId", directory);
       form.append("file", selectedFile);
       try {
+        setLoading(true)
         const res = await axios.post(
           "https://file-manager-backend-vert.vercel.app/api/create-file",
           form
@@ -22,7 +21,9 @@ const CreateFiles = () => {
           console.log("File created", res.data);
         }
         fetchFilesandFolders(profile, setFolders, setFiles);
+        setLoading(false)
       } catch (error) {
+        setLoading(false)
         console.log(error);
       }
     }
